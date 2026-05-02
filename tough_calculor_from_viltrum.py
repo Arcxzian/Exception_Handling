@@ -42,3 +42,57 @@ class Calculator:
         self.num1   = num1
         self.num2   = num2
         self.result = None
+
+    def calculate(self) -> float:
+        """
+        MUST be overridden by every subclass.
+        Raises NotImplementedError if called directly on base class.
+        """
+        raise NotImplementedError(
+            f"{self.__class__.__name__} must implement calculate()"
+        )
+ 
+    def display_result(self):
+        """
+        Shared method (inherited by ALL subclasses).
+        Formats and prints the equation neatly.
+        """
+        print(f"\n{color.GREEN}{color.BOLD}"
+              f"  {self.num1} {self.OPERATION_SYMBOL} {self.num2} = {self.result}"
+              f"{color.RESET}\n")
+    
+   
+# CLASS 1 ADDITION
+class AddCalculator(Calculator):
+    """
+    Inherits from Calculator.
+    Overrides calculate() to perform addition.
+    """
+    OPERATION_SYMBOL = "+"
+
+    def calculate(self) -> float:
+        self.result = self.num1 + self.num2
+        return self.result
+    
+class SubtractCalculator(Calculator):
+    """
+    Inherits from Calculator. 
+    overrides calculate() to perform subraction.
+    """
+    OPERATION_SYMBOL = "-"
+
+    def calculate(self) -> float:
+        self.result = self.num1 - self.num2
+        return self.result
+
+class MultiplyCalculator(Calculator):
+    """
+    Inherits from Calculator.
+    oveerides calculate() to perform Multiplication.
+    """
+    OPERATION_SYMBOL= "*"
+
+    def calculate(self) -> float:
+        self.result = self.num1 * self.num2
+        return self.result
+
