@@ -73,7 +73,8 @@ class AddCalculator(Calculator):
     def calculate(self) -> float:
         self.result = self.num1 + self.num2
         return self.result
-    
+
+#CLASS 2 SUBTRACTION
 class SubtractCalculator(Calculator):
     """
     Inherits from Calculator. 
@@ -85,6 +86,7 @@ class SubtractCalculator(Calculator):
         self.result = self.num1 - self.num2
         return self.result
 
+#CLASS 3 MULTIPLICATION
 class MultiplyCalculator(Calculator):
     """
     Inherits from Calculator.
@@ -96,3 +98,42 @@ class MultiplyCalculator(Calculator):
         self.result = self.num1 * self.num2
         return self.result
 
+# CLASS 4 DIVISION
+class DivideCalculator(Calculator):
+    """
+    Inherits from Calculator.
+    Overrides calculate() with EXTRA guard for division by zero.
+    Raises ZeroDivisionError so the app can catch and handle it.
+    """
+      
+    OPERATION_SYMBOL = "÷"
+
+    def calculate(self) -> float:
+        if self.num2 == 0:
+            raise ZeroDivisionError("Cannot Divide by zero!")
+        self.result = self.num1 / self.num2
+        return self.result
+    
+# ══════════════════════════════════════════════
+#  MANAGER CLASS — CalculatorApp
+#  (Controller; uses all 4 subclasses above)
+# ══════════════════════════════════════════════
+
+class CalculatorApp:
+     """
+    Controls the entire user experience:
+      - Shows the menu
+      - Gets and validates user input (with exceptions)
+      - Picks the correct Calculator subclass (factory method)
+      - Loops until the user quits
+      - Tracks a session history of calculations (bonus feature!)
+    """
+     MENU = {
+         "1": ("Addition",      AddCalculator),
+         "2": ("Subtraction",        SubtractCalculator),
+         "3": ("Multiplication",        MultiplyCalculator),
+         "4": ("Division",      DivideCalculator)
+     }
+    
+def __init__(self):
+    self.history = []
