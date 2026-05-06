@@ -137,3 +137,43 @@ class CalculatorApp:
     
 def __init__(self):
     self.history = []
+
+    def get_calculator(self, choice: str, num1: float, num2: float) -> Calculator:
+        """Returns the correct subclass instance based on menu choice.
+        This is the Factory Pattern — one method, many possible objects.
+        """
+        _, calc_class = self.MENU[choice]
+        return calc_class(num1, num2)
+    
+    def get_operation_choice(self) -> str:
+        """Show the operations menu and get a valid choice."""
+        print(f"{color.CYAN}{"-"*44}")
+        print(f" Choose an operation:")
+        for key, (name, _) in self.MENU.items():
+            print(f" [{key}] {name}")
+        print(f"{'-'*44}{color.RESET}")
+
+        while True:
+            choice = input("f{color.YELLOW} Enter choise (1-4): {color.RESET}").strip()
+            if choice in self.MENU:
+                return choice
+            print(f"{color.RED} ⚠ Invalid choice, Please enter 1, 2, 3, or 4 {color.RESET}")
+
+    def get_number(self, prompt: str) -> float:
+         """
+        Asks the user for a number and keeps asking until valid.
+        Catches ValueError when the user types something non-numeric.
+        """
+         while True:
+             try:
+                 return float(input(f"{color.YELLOW}    {prompt}:   {color.RESET}"))
+             except ValueError:
+                 print(f"{color.RED}  ⚠ Thats not a valid number. Try again. {color.RESET}")
+                
+    def show_history(self):
+        """Prints all calculations done in this sesion."""
+        if not self.history:
+            return
+        print(f"\n{color.BLUE}{color.BOLD} Session History:{color.RESET}")
+        for i, entry in enumerate(self.history, 1):
+            print(f"{color.BLUE} {i}. {entry}{color.RESET}")
