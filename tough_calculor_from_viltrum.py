@@ -233,7 +233,7 @@ def __init__(self):
  
         # Step 6 — Exit message
         print(f"\n{color.GREEN}{color.BOLD}"
-              f"  🎉 Thank you for using This calculator! Paalam! 👋."
+              f"  🎉 Thank you for using This calculator! Paalam! "
               f"{Color.RESET}\n")
  
  
