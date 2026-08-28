@@ -19,9 +19,7 @@ def banner():
 ╚══════════════════════════════════════════╝
 {color.RESET}""")
     
-# ══════════════════════════════════════════════
-#  BASE CLASS — Calculator
-# ══════════════════════════════════════════════
+
 
 class Calculator:
     """
@@ -36,7 +34,7 @@ class Calculator:
     without using the `abc` module.
     """
 
-    OPERATION_SYMBOL = "?"   # each child overrides this
+    OPERATION_SYMBOL = "?"   
  
     def __init__(self, num1: float, num2: float):
         self.num1   = num1
@@ -62,7 +60,7 @@ class Calculator:
               f"{color.RESET}\n")
     
    
-# CLASS 1 ADDITION
+
 class AddCalculator(Calculator):
     """
     Inherits from Calculator.
@@ -74,7 +72,7 @@ class AddCalculator(Calculator):
         self.result = self.num1 + self.num2
         return self.result
 
-#CLASS 2 SUBTRACTION
+
 class SubtractCalculator(Calculator):
     """
     Inherits from Calculator. 
@@ -86,7 +84,6 @@ class SubtractCalculator(Calculator):
         self.result = self.num1 - self.num2
         return self.result
 
-#CLASS 3 MULTIPLICATION
 class MultiplyCalculator(Calculator):
     """
     Inherits from Calculator.
@@ -98,7 +95,7 @@ class MultiplyCalculator(Calculator):
         self.result = self.num1 * self.num2
         return self.result
 
-# CLASS 4 DIVISION
+
 class DivideCalculator(Calculator):
     """
     Inherits from Calculator.
@@ -114,10 +111,7 @@ class DivideCalculator(Calculator):
         self.result = self.num1 / self.num2
         return self.result
     
-# ══════════════════════════════════════════════
-#  MANAGER CLASS — CalculatorApp
-#  (Controller; uses all 4 subclasses above)
-# ══════════════════════════════════════════════
+
 
 class CalculatorApp:
      """
@@ -180,7 +174,7 @@ def __init__(self):
                 return False
             print(f"{color.RED}  ⚠  Please type 'yes' or 'no'.{color.RESET}")
 
-     # ── BONUS: Session History ────────────────────────────────────
+    
     def show_history(self):
         """Prints all calculations done in this sesion."""
         if not self.history:
@@ -188,7 +182,7 @@ def __init__(self):
         print(f"\n{color.BLUE}{color.BOLD} Session History:{color.RESET}")
         for i, entry in enumerate(self.history, 1):
             print(f"{color.BLUE} {i}. {entry}{color.RESET}")
-# ── MAIN LOOP ─────────────────────────────────────────────────
+
      def run(self):
         """
         Main application loop.
@@ -198,48 +192,46 @@ def __init__(self):
         banner()
         try:
             while True:
-                # Step 1 — Choose operation
+                
                 choice = self.get_operation_choice()
                 op_name = self.MENU[choice][0]
  
-                # Step 2 — Get two numbers
+               
                 print(f"\n{color.CYAN}  [{op_name}] Enter your numbers:{color.RESET}")
                 num1 = self.get_number("First number ")
                 num2 = self.get_number("Second number")
  
-                # Step 3 — Calculate & display result
+                
                 try:
                     calc = self.get_calculator(choice, num1, num2)
                     calc.calculate()
                     print(f"\n{color.CYAN}  ✅ Result:{color.RESET}", end="")
                     calc.display_result()
  
-                    # Save to history (bonus)
+                   
                     entry = f"{num1} {calc.OPERATION_SYMBOL} {num2} = {calc.result}"
                     self.history.append(entry)
  
                 except ZeroDivisionError as e:
-                    # Caught from DivideCalculator.calculate()
+                   
                     print(f"\n{color.RED}  ❌ Math Error: {e}{color.RESET}\n")
  
-                # Step 4 — Try again?
+               
                 self.show_history()
                 if not self.ask_try_again():
-                    break   # exits the while loop → goes to "Thank you!"
+                    break   
  
         except KeyboardInterrupt:
-            # Catches Ctrl+C anywhere in the program
+            
             print(f"\n\n{color.RED}  Program interrupted by user.{color.RESET}")
  
-        # Step 6 — Exit message
+        
         print(f"\n{color.GREEN}{color.BOLD}"
               f"  🎉 Thank you for using This calculator! Paalam! "
               f"{Color.RESET}\n")
  
  
-# ══════════════════════════════════════════════
-#  ENTRY POINT
-# ══════════════════════════════════════════════
+
 if __name__ == "__main__":
     app = CalculatorApp()
     app.run()
